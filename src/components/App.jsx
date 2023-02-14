@@ -39,7 +39,7 @@ export class App extends Component {
       console.log(hits, totalHits);
       this.setState(prevState => ({
         images: [...prevState.images, ...hits],
-        loadMore: this.state.page,
+        loadMore: this.state.page < Math.ceil(totalHits / this.state.per_page),
       }));
     } catch (error) {
       this.setState({ error: error.message });
@@ -59,9 +59,9 @@ export class App extends Component {
 
   onloadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    // this.scrollOnMoreButton();
+   
   };
-
+ 
   openModal = largeImageURL => {
     console.log(largeImageURL);
     this.setState({
@@ -75,7 +75,7 @@ export class App extends Component {
       showModal: false,
     });
   };
-  
+
   render() {
     const { images, isLoading, loadMore, page, showModal, largeImageURL } =
       this.state;
